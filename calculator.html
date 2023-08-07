@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>风险概率计算器</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+    }
+
+    .header h2 {
+      color: #333;
+    }
+
+    .header p {
+      color: #666;
+    }
+
+    label {
+      font-size: 16px;
+      color: #333;
+    }
+
+    input {
+      margin-bottom: 10px;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 100%;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 10px 2px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .footer {
+      margin-top: 20px;
+      color: #777;
+    }
+
+  </style>
+  <script type="text/javascript">
+    function calculate() {
+      // weight calculations
+      result = 1 / (1 + Math.exp(-result));
+      document.getElementById('probability').innerHTML = "Predicted Probability: " + result;
+
+      // 保存到CSV文件的代码也需要修改以保存所有输入变量的值
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h2>新的简介</h2>
+    <p>简介：新的简介</p>
+
+<label for="X1">X1 (范围: 0 - 100):</label>
+<input type="number" id="X1" name="X1" min="0" max="100"><br><label for="X2">X2:</label><select id="X2" name="X2"><option value="Option1" title="这是选项1的描述">Option1</option><option value="Option2" title="这是选项2的描述">Option2</option></select><br>        <button onclick="calculate()">计算按钮</button>
+        <p id="probability"></p>
+        <div class="footer">
+            <p>作者：新的作者</p>
+            <p>参考：新的参考</p>
+        </div>
+    </div>
+    <script>
+        function calculate() {
+        let result = 0.1 * parseFloat(document.getElementById("X1").value) + 1.0 * (document.getElementById("X2").value == "Option2" ? 1 : 0);
+        result = 1 / (1 + Math.exp(-result));
+        document.getElementById('probability').innerHTML = "Predicted Probability: " + result.toFixed(2);
+    }
+    </script>
+</body>
+</html>
+

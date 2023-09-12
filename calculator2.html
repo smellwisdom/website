@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>风险概率计算器</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+    }
+
+    .header h2 {
+      color: #333;
+    }
+
+    .header p {
+      color: #666;
+    }
+
+    label {
+      font-size: 16px;
+      color: #333;
+    }
+
+    input {
+      margin-bottom: 10px;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 100%;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 10px 2px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .footer {
+      margin-top: 20px;
+      color: #777;
+    }
+
+  </style>
+  <script type="text/javascript">
+    function calculate() {
+      // weight calculations
+      result = 1 / (1 + Math.exp(-result));
+      document.getElementById('probability').innerHTML = "Predicted Probability: " + result;
+
+      // 保存到CSV文件的代码也需要修改以保存所有输入变量的值
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h2>急性缺血性卒中患者血管内治疗后六个月死亡风险预测计算器</h2>
+    <p>简介：本计算器旨在帮助医疗专家估计急性缺血性卒中患者在接受血管内治疗术后六个月内的死亡风险。请输入患者的相关健康数据，然后点击计算，得到预测的风险。请注意，该结果仅供参考，不应替代医疗专家的专业判断和建议。</p>
+
+
+<label for="MRS是否为5分？">MRS是否为5分？:</label>
+<select id="MRS是否为5分？" name="MRS是否为5分？"><option value="否" title="MRS_5为0">否</option>
+<option value="是" title="MRS_5为1">是</option></select><br>
+
+<label for="中性粒细胞百分比">中性粒细胞百分比 (范围: 0 - 100):</label>
+<input type="number" id="中性粒细胞百分比" name="中性粒细胞百分比" min="0" max="100"><br>
+
+<label for="发病血糖">发病血糖 (范围: 0 - 20):</label>
+<input type="number" id="发病血糖" name="发病血糖" min="0" max="20"><br>
+
+<label for="发病NIHSS评分">发病NIHSS评分 (范围: 0 - 40):</label>
+<input type="number" id="发病NIHSS评分" name="发病NIHSS评分" min="0" max="40"><br>
+<button onclick="calculate()">计算按钮</button>
+        <p id="probability"></p>
+        <div class="footer">
+            <p>作者：wr</p>
+            <p>参考：急性缺血性卒中患者血管内治疗后六个月死亡风险预测</p>
+        </div>
+    </div>
+    <script>
+        function calculate() {
+        
+let 中性粒细胞百分比Value = parseFloat(document.getElementById("中性粒细胞百分比").value);
+if (isNaN(中性粒细胞百分比Value) || 中性粒细胞百分比Value < 0 || 中性粒细胞百分比Value > 100) {
+    alert("中性粒细胞百分比 的值应该在 0 和 100 之间");
+    return;
+}
+
+let 发病血糖Value = parseFloat(document.getElementById("发病血糖").value);
+if (isNaN(发病血糖Value) || 发病血糖Value < 0 || 发病血糖Value > 20) {
+    alert("发病血糖 的值应该在 0 和 20 之间");
+    return;
+}
+
+let 发病NIHSS评分Value = parseFloat(document.getElementById("发病NIHSS评分").value);
+if (isNaN(发病NIHSS评分Value) || 发病NIHSS评分Value < 0 || 发病NIHSS评分Value > 40) {
+    alert("发病NIHSS评分 的值应该在 0 和 40 之间");
+    return;
+}
+
+        let logit = -8.66638 + 0 * (document.getElementById("MRS是否为5分？").value == "否" ? 1 : 0) + 0.80571 * (document.getElementById("MRS是否为5分？").value == "是" ? 1 : 0) + 0.06459 * parseFloat(document.getElementById("中性粒细胞百分比").value) + 0.18482 * parseFloat(document.getElementById("发病血糖").value) + 0.05405 * parseFloat(document.getElementById("发病NIHSS评分").value);
+        let p = 1 / (1 + Math.exp(-logit));
+        document.getElementById('probability').innerHTML = "Predicted Probability: " + p.toFixed(2);
+    }
+    </script>
+</body>
+</html>
+
